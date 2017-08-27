@@ -1,7 +1,73 @@
 {
-  "name": "oanda-adapter",
-  "version": "0.1.15",
+  "_args": [
+    [
+      {
+        "raw": "git+https://github.com/VRspace4/oanda-adapter.git",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "git+https://github.com/VRspace4/oanda-adapter.git",
+        "spec": "git+https://github.com/VRspace4/oanda-adapter.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:VRspace4/oanda-adapter.git",
+          "sshUrl": "git+ssh://git@github.com/VRspace4/oanda-adapter.git",
+          "httpsUrl": "git+https://github.com/VRspace4/oanda-adapter.git",
+          "gitUrl": "git://github.com/VRspace4/oanda-adapter.git",
+          "shortcut": "github:VRspace4/oanda-adapter",
+          "directUrl": "https://raw.githubusercontent.com/VRspace4/oanda-adapter/master/package.json"
+        }
+      },
+      "C:\\JP170701\\GD\\dev\\Theta\\LiveScoreboard"
+    ]
+  ],
+  "_from": "git+https://github.com/VRspace4/oanda-adapter.git",
+  "_id": "oanda-adapter@0.1.15",
+  "_inCache": true,
+  "_location": "/oanda-adapter",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "git+https://github.com/VRspace4/oanda-adapter.git",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "git+https://github.com/VRspace4/oanda-adapter.git",
+    "spec": "git+https://github.com/VRspace4/oanda-adapter.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:VRspace4/oanda-adapter.git",
+      "sshUrl": "git+ssh://git@github.com/VRspace4/oanda-adapter.git",
+      "httpsUrl": "git+https://github.com/VRspace4/oanda-adapter.git",
+      "gitUrl": "git://github.com/VRspace4/oanda-adapter.git",
+      "shortcut": "github:VRspace4/oanda-adapter",
+      "directUrl": "https://raw.githubusercontent.com/VRspace4/oanda-adapter/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/VRspace4/oanda-adapter.git#786fc07d49b61a4460b9d0e80ec6ef4969761487",
+  "_shasum": "4135d53faa012adafebd89150c3efd76f344244f",
+  "_shrinkwrap": null,
+  "_spec": "git+https://github.com/VRspace4/oanda-adapter.git",
+  "_where": "C:\\JP170701\\GD\\dev\\Theta\\LiveScoreboard",
+  "author": {
+    "name": "Jon Kafton",
+    "email": "support@cloud9trader.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Cloud9Trader/oanda-adapter/issues"
+  },
+  "dependencies": {
+    "backbone-events-standalone": "~0.2.1",
+    "underscore": "~1.6.0"
+  },
   "description": "Node.js adapter for OANDA's REST and streaming API.",
+  "devDependencies": {},
+  "gitHead": "786fc07d49b61a4460b9d0e80ec6ef4969761487",
   "homepage": "https://github.com/Cloud9Trader/oanda-adapter",
   "keywords": [
     "trading",
@@ -9,21 +75,15 @@
     "adapter",
     "server"
   ],
-  "author": {
-    "name": "Jon Kafton",
-    "email": "support@cloud9trader.com"
-  },
+  "license": "MIT",
+  "main": "OandaAdapter.js",
+  "name": "oanda-adapter",
+  "optionalDependencies": {},
+  "readme": "oanda-adapter\r\n=============\r\n\r\nNode.js adapter for [OANDA](http://www.oanda.com/)'s REST and streaming API, from [Cloud9Trader](https://www.cloud9trader.com).\r\n\r\n* Provides a single interface for requesting data and streaming prices and events.\r\n\r\n* Manages pub/sub subscriptions to live prices and events.\r\n\r\n* Attempts reconnect if keep-alive connection is lost.\r\n\r\n* Rate limits REST requests according to OANDA limit (queued for delayed execution with warning logged where threshold exceeded).\r\n\r\nSee also [OANDA Developer's API](http://developer.oanda.com/docs/).\r\n\r\n## Installation\r\n\r\n```bash\r\nnpm install oanda-adapter\r\n```\r\n\r\n## API Overview\r\n\r\n```js\r\nvar OANDAAdapter = require('oanda-adapter');\r\n\r\nvar client = new OANDAAdapter({\r\n    // 'live', 'practice' or 'sandbox'\r\n    environment: 'practice',\r\n    // Generate your API access in the 'Manage API Access' section of 'My Account' on OANDA's website\r\n    accessToken: 'a837f0927f0b0cd630a0934059c87003-7eb890aff42eb9c985305b309a94e421',\r\n    // Optional. Required only if evironment is 'sandbox'\r\n    username: 'a837f0927f0b0cd630a0934059c87003-7eb890aff42eb9c985305b309a94e421'\r\n});\r\n```\r\n\r\n### subscribeEvents(listener[, context]);\r\n\r\nSubscribes to events stream.\r\n\r\n```js\r\nclient.subscribeEvents(function (event) {\r\n    // ...\r\n}, this);\r\n```\r\nOptionally pass a `context` for `listener` to be bound to. `listener` is called with `event`, an object that will have a `type` property containing one of the following values:\r\n\r\n```\r\nMARKET_ORDER_CREATE, STOP_ORDER_CREATE, LIMIT_ORDER_CREATE, MARKET_IF_TOUCHED_ORDER_CREATE,\r\nORDER_UPDATE, ORDER_CANCEL, ORDER_FILLED, TRADE_UPDATE, TRADE_CLOSE, MIGRATE_TRADE_OPEN,\r\nMIGRATE_TRADE_CLOSE, STOP_LOSS_FILLED, TAKE_PROFIT_FILLED, TRAILING_STOP_FILLED, MARGIN_CALL_ENTER,\r\nMARGIN_CALL_EXIT, MARGIN_CLOSEOUT, TRANSFER_FUNDS, DAILY_INTEREST, FEE\r\n```\r\nSee [OANDA Docs - Events Streaming](http://developer.oanda.com/docs/v1/stream/#events-streaming) for more info on the various types.\r\n\r\n\r\n### unsubscribeEvents([listener][, context]);\r\n\r\nUnsubscribes from events stream. Omitting arguments will unsubscribe all listeners.\r\n\r\n### subscribePrice(accountId, instrument, listener[, context]);\r\n\r\nSubscribes to rates stream for a single instrument. Use `getInstruments()` to retrieve list of available instruments. Note that a single keep alive request will be managed as you subscribe to various instruments. Optionally pass a `context` for `listener` to be bound to.\r\n\r\n```js\r\nclient.subscribePrice(\"1234567\", \"EUR_USD\", function (tick) {\r\n    // ...\r\n}, this);\r\n```\r\n\r\n### unsubscribePrice(instrument, listener[, context]);\r\n\r\nUnsubscribes from rates stream. Omitting arguments will unsubscribe all listeners.\r\n\r\n\r\n### getAccounts(callback)\r\n\r\nList accounts for a user. `callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `accounts` Array of accounts available under current access token (or for `username` if sandbox) \r\n\r\n### getAccount(accountId, callback)\r\n\r\nGet account information. `callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `account` Object representing account information\r\n\r\n### getInstruments(accountId, callback)\r\n\r\nList instruments available to an account. `callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `instruments` Array of available instruments\r\n\r\n### getPrice(instrument, callback)\r\n\r\nGets the current price of an instrument. `instrument` can be an array to retrive multiple prices. `callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `price` Object representing current price\r\n\r\n### getCandles(symbol, start, end, granularity, callback)\r\n\r\nGets the historical price candles for an instrument. See [OANDA Docs - Retrieve Instrument History](http://developer.oanda.com/docs/v1/rates/#retrieve-instrument-history) for argument format and available values.`callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `candles` Array of historical price bars\r\n\r\n### getOpenPositions(accountId, callback)\r\n\r\nLists the open positions for an account. `callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `positions` Array of open positions\r\n\r\n### getOpenTrades(accountId, callback)\r\n\r\nLists the open trades for an account. `callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `trades` Array of open trades\r\n\r\n### createOrder(accountId, order, callback)\r\n\r\nCreates an order for trade execution.\r\n\r\nThe second argument, `order` is an object with the following properties:\r\n\r\n* {String} `instrument` Required. Instrument to open the order on.\r\n* {Number} `units` Required. The number of units to open order for.\r\n* {String} `side` Required. Direction of the order, either `buy` or `sell`.\r\n* {String} `type` Required. The type of the order `limit`, `stop`, `marketIfTouched` or `market`.\r\n* {String} `expiry` Required. If order type is `limit`, `stop`, or `marketIfTouched`. The value specified must be in a valid datetime format.\r\n* {String} `price` Required. If order type is `limit`, `stop`, or `marketIfTouched`. The price where the order is set to trigger at.\r\n* {Number} `lowerBound` Optional. The minimum execution price.\r\n* {Number} `upperBound` Optional. The maximum execution price.\r\n* {Number} `stopLoss` Optional. The stop loss price.\r\n* {Number} `takeProfit` Optional. The take profit price.\r\n* {Number} `trailingStop` Optional The trailing stop distance in pips, up to one decimal place.\r\n\r\n`callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `confirmation` Object representing trade confirmation\r\n\r\n### closeTrade(tradeId, callback)\r\n\r\nCloses a trade by its `tradeId`. `callback` is called with the following arguments:\r\n\r\n* `error`\r\n* `confirmation` Object representing trade close confirmation\r\n\r\n### kill()\r\n\r\nAborts any open events or rates streaming connections and removes all event listeners\r\n\r\n```js\r\nclient.kill();\r\n```\r\n\r\n## Author\r\n\r\nBy [Cloud9Trader](https://www.cloud9trader.com). Simple, powerful platform for algorithmic trading.",
+  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Cloud9Trader/oanda-adapter.git"
+    "url": "git+https://github.com/Cloud9Trader/oanda-adapter.git"
   },
-  "dependencies": {
-    "backbone-events-standalone": "~0.2.1",
-    "underscore": "~1.6.0"
-  },
-  "bugs": {
-    "url": "https://github.com/Cloud9Trader/oanda-adapter/issues"
-  },
-  "main": "OandaAdapter.js",
-  "license": "MIT"
+  "version": "0.1.15"
 }
